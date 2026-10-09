@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff5fa">
+<title>Kindly — a little reassurance</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+  :root{--paper:#f8f6f1;--ink:#252722;--muted:#77796f;--green:#465c4a;--line:#e9e5dc;--lilac:#ece9f2;--yellow:#e9c781}
+  *{box-sizing:border-box} body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;display:grid;grid-template-rows:auto 1fr auto}
+  header,footer{width:min(1120px,calc(100% - 56px));margin:auto;display:flex;align-items:center;justify-content:space-between}
+  header{height:88px;border-bottom:1px solid var(--line)} .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.04em;font-size:19px}.mark{width:28px;height:28px;border-radius:50%;background:var(--green);display:grid;place-items:center;color:white;font-size:15px}
+  .tag{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  main{width:min(1120px,calc(100% - 56px));margin:0 auto;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:9%;padding:70px 0 80px}
+  .eyebrow{display:flex;align-items:center;gap:10px;color:var(--green);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}.eyebrow:before{content:'';width:23px;height:1px;background:var(--green)}
+  h1{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(48px,6.3vw,78px);line-height:1.06;letter-spacing:-.045em;margin:24px 0 20px}h1 em{color:var(--green);font-weight:500}.intro{max-width:380px;color:var(--muted);font-size:16px;line-height:1.75;margin:0 0 34px}
+  form{max-width:420px}.label{display:block;font-size:12px;font-weight:600;margin-bottom:9px}.input-wrap{display:flex;align-items:center;background:#fff;border:1px solid #dedbd2;border-radius:9px;padding:5px 6px 5px 15px;transition:.2s}.input-wrap:focus-within{border-color:var(--green);box-shadow:0 0 0 3px #465c4a18}input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:15px;background:transparent;color:var(--ink);padding:12px 4px}input::placeholder{color:#a4a49c}button{font:inherit;cursor:pointer;border:0}.submit{background:var(--green);color:white;border-radius:6px;padding:12px 17px;font-size:13px;font-weight:600;transition:background .2s,transform .2s}.submit:hover{background:#35483a;transform:translateY(-1px)}.privacy{display:flex;align-items:center;gap:7px;margin-top:14px;color:#92938b;font-size:11px}.privacy svg{width:13px;height:13px}
+  .art{position:relative;min-height:438px;border-radius:48% 48% 42% 42% / 42% 42% 48% 48%;background:var(--lilac);display:grid;place-items:center;overflow:hidden}.sun{position:absolute;width:216px;height:216px;background:#f2d89f;border-radius:50%;top:66px;right:14%;opacity:.86}.hill{position:absolute;bottom:-15%;width:120%;height:48%;border-radius:50% 50% 0 0;background:#d6ddd0;transform:rotate(-9deg)}.hill.two{bottom:-23%;left:-28%;background:#b9c8ba;transform:rotate(12deg)}.star{position:absolute;color:#fff;font-size:22px}.s1{top:22%;left:20%}.s2{top:40%;right:19%;font-size:13px}.s3{top:14%;right:33%;font-size:12px}.note{position:absolute;top:48px;left:47px;color:#787668;font-family:'Playfair Display',serif;font-style:italic;font-size:15px;transform:rotate(-8deg)}.quote-card{position:relative;z-index:2;background:rgba(255,255,255,.89);backdrop-filter:blur(8px);width:min(340px,75%);padding:29px 31px 25px;border-radius:12px;box-shadow:0 18px 50px #35392b14;transform:rotate(2deg)}.quote-card .qmark{font-family:'Playfair Display',serif;font-size:50px;line-height:.8;color:#9aaa96;margin-bottom:15px}.quote-text{font-family:'Playfair Display',serif;font-size:24px;line-height:1.35;letter-spacing:-.02em}.quote-by{margin-top:19px;color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  #result{display:none}.result-name{font-family:'Playfair Display',serif;font-size:clamp(46px,5.5vw,66px);line-height:1.07;letter-spacing:-.04em;margin:24px 0 13px}.result-sub{color:var(--muted);line-height:1.7;margin:0 0 27px}.result-quote{max-width:490px;border-left:2px solid #a5b19e;padding:5px 0 5px 22px;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(25px,3.2vw,37px);line-height:1.35}.actions{display:flex;gap:12px;align-items:center;margin-top:30px}.again{background:var(--green);color:white;border-radius:7px;padding:13px 18px;font-size:13px;font-weight:600}.again:hover{background:#35483a}.edit{background:transparent;color:var(--muted);padding:12px;font-size:13px}.edit:hover{color:var(--ink)}.counter{font-size:11px;color:var(--muted);margin-top:15px}
+  footer{height:66px;border-top:1px solid var(--line);font-size:11px;color:#92938b}.foot-right{display:flex;gap:18px;align-items:center}.foot-dot{width:3px;height:3px;background:#bcbcb3;border-radius:50%}
+  @media(max-width:760px){header,footer,main{width:min(100% - 40px,520px)}header{height:68px}.tag{font-size:9px}main{grid-template-columns:1fr;gap:45px;padding:51px 0 55px}.art{min-height:350px;max-width:470px;width:100%;justify-self:center}.sun{width:180px;height:180px}h1{font-size:clamp(50px,12vw,70px);margin-top:18px}.intro{font-size:15px;margin-bottom:27px}footer{height:58px}.foot-right{gap:9px}}
+  @media(max-width:380px){.submit{padding:12px 11px}.art{min-height:310px}.quote-card{padding:23px}.quote-text{font-size:21px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  /* A quieter, centered layout with an optional evening palette. */
+  :root{color-scheme:light;--paper:#fff5fa;--ink:#442b39;--muted:#927687;--green:#ad4777;--line:#f1d9e5;--card:#fffafd;--glow:#ffdbea;--accent:#d46b9c}
+  :root[data-theme="dark"]{color-scheme:dark;--paper:#201720;--ink:#f8e9f1;--muted:#c2a7b7;--green:#f0a0c3;--line:#493443;--card:#2a202a;--glow:#4a2c42;--accent:#d985ad}
+  html{min-height:100%;background:var(--paper)}
+  body{position:relative;isolation:isolate;overflow-x:hidden;background:linear-gradient(135deg,#fff8fb 0%,#ffedf5 42%,#fce9f1 72%,#fff1ed 100%);transition:background .45s,color .45s}
+  body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 12% 14%,#ffd6e7aa 0,transparent 36%),radial-gradient(ellipse at 90% 78%,#f5c5d899 0,transparent 34%),radial-gradient(ellipse at 80% 5%,#ffe4d488 0,transparent 27%);animation:rose-glow 12s ease-in-out infinite alternate}
+  :root[data-theme="dark"] body{background:linear-gradient(135deg,#201720 0%,#2c1d2a 48%,#251d28 100%)}
+  :root[data-theme="dark"] body:before{background:radial-gradient(ellipse at 12% 14%,#733f6280 0,transparent 38%),radial-gradient(ellipse at 90% 78%,#79425d66 0,transparent 36%),radial-gradient(ellipse at 80% 5%,#77513d55 0,transparent 28%)}
+  header,footer{width:min(760px,calc(100% - 48px))}
+  header{height:76px}
+  .tag{display:none}
+  .theme-toggle{display:flex;align-items:center;gap:8px;background:transparent;color:var(--muted);padding:9px 11px;border:1px solid var(--line);border-radius:999px;font-size:12px;transition:color .2s,border-color .2s,transform .2s}
+  .theme-toggle:hover{color:var(--ink);border-color:var(--muted);transform:translateY(-1px)}
+  .theme-icon{font-size:15px;line-height:1}
+  main{width:min(760px,calc(100% - 48px));grid-template-columns:1fr;gap:0;padding:clamp(65px,12vh,125px) 0 110px;min-height:calc(100vh - 142px)}
+  #welcome,#result{width:min(100%,570px);margin:auto;position:relative}
+  #welcome:before,#result:before{display:none}
+  .tulip-deco{position:absolute;z-index:0;top:106px;right:-22px;width:104px;height:150px;overflow:visible;pointer-events:none;transform-origin:50% 100%;animation:tulip-sway 5s ease-in-out infinite}
+  #welcome>*:not(.tulip-deco){position:relative;z-index:1}
+  .eyebrow{font-size:11px;letter-spacing:.15em}
+  .eyebrow:before{width:17px}
+  h1{font-size:clamp(52px,8vw,82px);margin:26px 0 17px;line-height:1.02}
+  .intro{max-width:430px;font-size:15px;margin-bottom:34px}
+  form{max-width:445px}
+  .label{font-size:12px;color:var(--muted)}
+  .input-wrap{background:var(--card);border-color:var(--line);border-radius:10px;padding:6px 7px 6px 16px}
+  input{color:var(--ink)}
+  .submit,.again{background:var(--green);color:var(--paper);border-radius:7px}
+  .submit:hover,.again:hover{filter:brightness(1.08)}
+  .privacy{color:var(--muted);opacity:.85}
+  .art{display:none}
+  .result-name{font-size:clamp(48px,7vw,70px);margin:26px 0 12px}
+  .result-quote{font-size:clamp(29px,4.2vw,42px);max-width:530px;border-left:1px solid var(--green);padding-left:24px}
+  .actions{margin-top:33px}
+  .edit{color:var(--muted)}
+  .counter{color:var(--muted);opacity:.8}
+  footer{height:66px;color:var(--muted)}
+  .foot-right{display:none}
+  .revealing{animation:arrive .65s cubic-bezier(.2,.7,.2,1) both}
+  .result-quote{position:relative;animation:arrive .8s .08s cubic-bezier(.2,.7,.2,1) both}
+  .quote-refresh{animation:quote-pop .62s cubic-bezier(.2,.8,.2,1) both!important}
+  .result-quote:after{content:"✨";display:inline-block;margin-left:8px;font-family:'DM Sans',sans-serif;font-size:19px;animation:twinkle 2.6s ease-in-out infinite;transform-origin:center}
+  .mark{background:var(--accent);animation:markbeat 3s ease-in-out infinite}
+  .eyebrow:after{content:"🌷";font-size:14px;letter-spacing:0;animation:petal 4s ease-in-out infinite}
+  .again{transition:transform .2s,box-shadow .2s}.again:hover{transform:translateY(-2px);box-shadow:0 7px 18px #a35e4830}
+  .theme-toggle{background:var(--card)}
+  #welcome,#result{padding:34px 38px;border:1px solid #fff9;border-radius:26px;background:color-mix(in srgb,var(--card) 78%,transparent);box-shadow:0 22px 70px #873c6420,0 2px 8px #873c6408;backdrop-filter:blur(16px)}
+  .input-wrap{box-shadow:0 7px 22px #9c4a7010}
+  .panda-bubble{box-shadow:0 9px 28px #a84c7918}
+  .mark{box-shadow:0 4px 14px #d46b9c55}
+  @keyframes rose-glow{from{transform:scale(1);filter:saturate(.92)}to{transform:scale(1.07);filter:saturate(1.13)}}
+  .panda-greeting{display:flex;align-items:center;gap:20px;margin:0 0 30px;min-height:112px}
+  .panda{position:relative;width:104px;height:104px;flex:0 0 104px;filter:drop-shadow(0 8px 8px #4a30251c);animation:panda-float 4s ease-in-out infinite;perspective:400px}
+  .panda-head{position:absolute;width:82px;height:76px;left:11px;top:21px;border-radius:48% 48% 45% 45%;background:radial-gradient(ellipse at 34% 24%,#fff 0%,#fff 38%,#f2eee8 80%,#ddd7cf 100%);box-shadow:inset -5px -6px 9px #bdb4a833,inset 3px 3px 7px #fff;z-index:2}
+  .panda-ear{position:absolute;width:33px;height:35px;top:8px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#55514f,#252422 65%,#171615);box-shadow:inset -3px -4px 5px #0005}
+  .panda-ear.left{left:13px;transform:rotate(-18deg)}.panda-ear.right{right:13px;transform:rotate(18deg)}
+  .panda-eye{position:absolute;top:25px;width:25px;height:30px;border-radius:55% 45% 55% 45%;background:radial-gradient(ellipse at 32% 24%,#4a4644,#171615 72%);transform:rotate(18deg)}.panda-eye.left{left:12px}.panda-eye.right{right:12px;transform:rotate(-18deg)}
+  .panda-eye:after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;top:5px;left:7px;box-shadow:2px 2px 4px #fff8}
+  .panda-nose{position:absolute;top:49px;left:34px;width:11px;height:8px;border-radius:50% 50% 55% 55%;background:linear-gradient(145deg,#383432,#111);z-index:3}.panda-smile{position:absolute;top:55px;left:31px;width:17px;height:9px;border-bottom:1.5px solid #514641;border-radius:0 0 50% 50%;z-index:3}
+  .panda-blush{position:absolute;top:48px;width:10px;height:6px;border-radius:50%;background:#e9a99a88;filter:blur(1px)}.panda-blush.left{left:7px}.panda-blush.right{right:7px}
+  .panda-body{position:absolute;width:59px;height:40px;left:22px;bottom:0;border-radius:48% 48% 42% 42%;background:radial-gradient(ellipse at 38% 23%,#fff,#eeeae4 72%,#d1c9c0);box-shadow:inset -4px -5px 8px #bdb4a833;z-index:1}
+  .panda-body:after{content:"";position:absolute;width:27px;height:23px;left:16px;top:9px;border-radius:50%;background:#fff9;box-shadow:inset 0 2px 3px #bdb4a822}
+  .panda-arm{position:absolute;width:21px;height:36px;right:12px;top:52px;border-radius:50%;background:linear-gradient(110deg,#44413f,#171615 70%);transform:rotate(-28deg);transform-origin:50% 10%;z-index:3;animation:panda-wave 2.4s ease-in-out infinite}
+  .panda-foot{position:absolute;width:24px;height:15px;bottom:-1px;border-radius:50%;background:linear-gradient(145deg,#3c3937,#171615);z-index:2}.panda-foot.left{left:24px;transform:rotate(-9deg)}.panda-foot.right{right:22px;transform:rotate(9deg)}
+  .panda-bubble{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px 16px 16px 4px;padding:13px 17px;color:var(--ink);font-family:'Playfair Display',serif;font-size:17px;line-height:1.35;box-shadow:0 8px 24px #72442a12;animation:bubble-in .7s .2s both}
+  .panda-bubble strong{color:var(--green);font-weight:600}
+  .panda-bubble:before{content:"";position:absolute;left:-7px;bottom:14px;width:13px;height:13px;background:var(--card);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+  @keyframes panda-float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+  @keyframes panda-wave{0%,55%,100%{transform:rotate(-28deg)}65%{transform:rotate(-58deg)}75%{transform:rotate(-15deg)}85%{transform:rotate(-52deg)}}
+  @keyframes bubble-in{from{opacity:0;transform:translateX(-8px) scale(.96)}to{opacity:1;transform:translateX(0) scale(1)}}
+  @keyframes tulip-sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  @keyframes arrive{0%{opacity:0;transform:translateY(18px) scale(.985);filter:blur(2px)}70%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes quote-pop{0%{opacity:.3;transform:translateY(10px) scale(.97)}65%{opacity:1;transform:translateY(-3px) scale(1.015)}100%{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes breathe{0%,100%{transform:translate(0,0) scale(1);opacity:.72}50%{transform:translate(-17px,14px) scale(1.12);opacity:1}}
+  @keyframes twinkle{0%,100%{transform:translateY(0) rotate(-8deg) scale(.85);opacity:.7}50%{transform:translateY(-5px) rotate(9deg) scale(1.12);opacity:1}}
+  @keyframes markbeat{0%,88%,100%{transform:scale(1)}92%{transform:scale(1.14)}96%{transform:scale(.98)}}
+  @keyframes petal{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+  @media(max-width:760px){header,footer,main{width:min(100% - 40px,570px)}header{height:68px}main{grid-template-columns:1fr;gap:0;padding:clamp(55px,10vh,90px) 0 75px;min-height:calc(100vh - 126px)}#welcome,#result{padding:28px 24px;border-radius:22px}.tulip-deco{width:72px;height:112px;top:113px;right:-6px}.panda-greeting{gap:12px}.panda-bubble{padding:12px 14px;font-size:16px}.art{display:none}h1{font-size:clamp(52px,12vw,72px)}footer{height:58px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  .mood-filter{border:0;padding:0;margin:0 0 24px;max-width:445px}
+  .mood-filter legend{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px}
+  .mood-options{display:flex;flex-wrap:wrap;gap:8px}
+  .mood-choice{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:12px;transition:background .2s,border-color .2s,transform .2s}
+  .mood-choice:hover{transform:translateY(-1px);border-color:var(--accent)}
+  .mood-choice[aria-pressed="true"]{background:#f9e0eb;border-color:#d985ad;color:#783d5b}
+  :root[data-theme="dark"] .mood-choice[aria-pressed="true"]{background:#4a2d40;border-color:#d985ad;color:#ffe3f0}
+  .optional{font-weight:400;opacity:.8}
+  .daily-checkin{border:0;padding:0;margin:0 0 22px;max-width:445px}
+  .checkin-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:10px}
+  .history-toggle{background:transparent;color:var(--green);text-decoration:underline;text-underline-offset:3px;font-size:11px;padding:4px}
+  .checkin-options{display:flex;flex-wrap:wrap;gap:7px}
+  .checkin-choice{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 10px;font-size:12px;transition:background .2s,border-color .2s,transform .2s}
+  .checkin-choice:hover{transform:translateY(-1px);border-color:var(--accent)}
+  .checkin-choice[aria-pressed="true"]{background:#f9e0eb;border-color:#d985ad;color:#783d5b}
+  :root[data-theme="dark"] .checkin-choice[aria-pressed="true"]{background:#4a2d40;border-color:#d985ad;color:#ffe3f0}
+  .checkin-note{font-size:10px;color:var(--muted);margin:8px 0 0}
+  .checkin-history{margin:10px 0 0;padding:13px 15px;background:var(--card);border:1px solid var(--line);border-radius:13px}
+  .checkin-history[hidden]{display:none}
+  .checkin-history p{margin:0 0 8px;font-size:11px;color:var(--muted)}
+  .checkin-history ul{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+  .checkin-history li{font-size:12px;color:var(--ink)}
+  .result-tools{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .tool-button{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 13px;font-size:12px;transition:transform .2s,border-color .2s}
+  .tool-button:hover{transform:translateY(-1px);border-color:var(--accent)}
+  .tool-button[aria-pressed="true"]{color:var(--green);border-color:var(--accent)}
+  .panda-cheer{margin:18px 0 0;color:var(--muted);font-size:13px}
+  .tiny-kindness{margin-top:20px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,color-mix(in srgb,var(--card) 92%,#f8dce9),var(--card));box-shadow:0 9px 26px #a84c790c}
+  .tiny-label{margin:0 0 7px;color:var(--green);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .tiny-text{margin:0;color:var(--ink);font:500 19px/1.45 'Playfair Display',Georgia,serif}
+  .tiny-note{margin:7px 0 0;color:var(--muted);font-size:11px}
+  .tiny-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .tiny-done{background:var(--green);color:var(--paper);border-radius:999px;padding:9px 13px;font-size:11px;font-weight:600;transition:transform .2s,box-shadow .2s}
+  .tiny-done:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 15px #a84c7925}
+  .tiny-done:disabled{opacity:.72;cursor:default}
+  .tiny-another{background:transparent;color:var(--muted);padding:8px;font-size:11px;text-decoration:underline;text-underline-offset:3px}
+  .tiny-status{min-height:18px;margin:9px 0 0;color:var(--green);font-size:12px}
+  .tiny-kindness.done{animation:kindness-glow .6s ease-out both}
+  @keyframes kindness-glow{50%{box-shadow:0 0 0 5px #e7a6c344,0 12px 32px #a84c7925}}
+  .feedback{margin-top:24px;padding-top:17px;border-top:1px solid var(--line)}
+  .feedback-question{margin:0 0 10px;color:var(--muted);font-size:12px}
+  .feedback-actions{display:flex;gap:8px}
+  .feedback-button{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--ink);font-size:12px}
+  .feedback-button:hover{border-color:var(--accent)}
+  .feedback-status,.copy-status{min-height:18px;color:var(--green);font-size:12px;margin:8px 0 0}
+  .favorites{margin-top:16px;padding:16px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+  .favorites[hidden]{display:none}
+  .favorites h3{margin:0 0 11px;font:600 13px 'DM Sans',sans-serif}
+  .favorite-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+  .favorite-item{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.5}
+  .favorite-item span{flex:1}
+  .remove-favorite{background:transparent;color:var(--muted);font-size:11px;padding:3px}
+  .remove-favorite:hover{color:var(--green);text-decoration:underline}
+  .share-dialog{width:min(520px,calc(100vw - 28px));max-height:calc(100dvh - 28px);padding:22px;border:1px solid var(--line);border-radius:22px;background:var(--card);color:var(--ink);box-shadow:0 28px 90px #32142645}
+  .share-dialog::backdrop{background:#21151dcc;backdrop-filter:blur(5px)}
+  .share-dialog[open]{animation:dialog-in .28s ease-out both}
+  .share-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:16px}
+  .share-head h2{font:500 24px 'Playfair Display',serif;margin:0 0 5px}
+  .share-head p{font-size:12px;color:var(--muted);margin:0}
+  .dialog-close{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;background:transparent;color:var(--ink);font-size:19px;line-height:1}
+  #share-canvas{display:block;width:min(100%,320px);height:auto;max-height:55dvh;object-fit:contain;margin:0 auto;border-radius:14px;box-shadow:0 9px 32px #a84c7918}
+  .share-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:16px}
+  @keyframes dialog-in{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @media(max-width:760px){.daily-checkin{margin-bottom:18px}.mood-filter{margin-bottom:20px}.mood-options{gap:7px}.mood-choice{padding:8px 10px}.result-tools{gap:7px}.tool-button{padding:9px 11px}.share-dialog{padding:17px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><span class="mark">✳</span> kindly</div><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode"><span class="theme-icon" aria-hidden="true">☾</span><span>Dark</span></button></header>
+<main>
+  <section id="welcome">
+    <svg class="tulip-deco" viewBox="0 0 104 150" role="img" aria-label="A pink tulip">
+      <path d="M52 66c0 24 2 47-2 75" fill="none" stroke="#62865f" stroke-width="5" stroke-linecap="round"/>
+      <path d="M49 111c-22-2-32-15-30-31 17 3 27 11 30 31Z" fill="#85aa78"/>
+      <path d="M51 125c4-21 16-31 32-31 0 16-10 29-32 31Z" fill="#72966b"/>
+      <path d="M52 69C38 61 31 48 36 30c8 3 13 10 16 20 1-17 8-28 20-34 6 18 2 33-12 48 13-9 23-9 31-3-7 17-20 25-39 26-18 0-31-8-38-24 11-7 23-5 38 6Z" fill="#ec83ad"/>
+      <path d="M52 68c-5-12-5-25 0-39 6 12 7 25 0 39Z" fill="#f7a5c5"/>
+      <path d="M37 43c-1 10 4 19 15 26M69 37c0 12-6 21-17 32" fill="none" stroke="#d96395" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="82" cy="18" r="3" fill="#f5b2ce"/><circle cx="25" cy="57" r="2.5" fill="#f5b2ce"/>
+    </svg>
+    <div class="panda-greeting" aria-label="A friendly panda greeting">
+      <div class="panda" aria-hidden="true"><span class="panda-ear left"></span><span class="panda-ear right"></span><div class="panda-head"><span class="panda-eye left"></span><span class="panda-eye right"></span><span class="panda-nose"></span><span class="panda-smile"></span><span class="panda-blush left"></span><span class="panda-blush right"></span></div><div class="panda-body"></div><span class="panda-arm"></span><span class="panda-foot left"></span><span class="panda-foot right"></span></div>
+      <div class="panda-bubble" id="panda-message" aria-live="polite">Hey! Kindly enter your name 🐼</div>
+    </div>
+    <div class="eyebrow">A moment for you</div>
+    <h1>Take what you<br>need <em>today.</em></h1>
+    <p class="intro">Some days call for a little extra kindness. Choose what you need, and find a few words to carry with you.</p>
+    <fieldset class="daily-checkin">
+      <legend class="checkin-heading">How are you feeling today?<button class="history-toggle" id="checkin-history-toggle" type="button" aria-expanded="false" aria-controls="checkin-history">My recent days</button></legend>
+      <div class="checkin-options">
+        <button class="checkin-choice" type="button" data-checkin="hopeful" data-need="hope" aria-pressed="false">🌤️ Hopeful</button>
+        <button class="checkin-choice" type="button" data-checkin="low" data-need="rest" aria-pressed="false">💛 Need comfort</button>
+        <button class="checkin-choice" type="button" data-checkin="overwhelmed" data-need="rest" aria-pressed="false">🌪 Overwhelmed</button>
+        <button class="checkin-choice" type="button" data-checkin="starting" data-need="fresh" aria-pressed="false">🌱 Ready to begin</button>
+      </div>
+      <p class="checkin-note">Optional and private—saved only on this device.</p>
+      <div class="checkin-history" id="checkin-history" hidden><p>A few recent check-ins, with no streaks to keep up.</p><ul id="checkin-history-list"></ul></div>
+    </fieldset>
+    <fieldset class="mood-filter" aria-label="Choose a feeling for your quote">
+      <legend>What do you need today? <span class="optional">(optional)</span></legend>
+      <div class="mood-options">
+        <button class="mood-choice" type="button" data-mood="hope" aria-pressed="false">🌤️ Hope</button>
+        <button class="mood-choice" type="button" data-mood="courage" aria-pressed="false">🦁 Courage</button>
+        <button class="mood-choice" type="button" data-mood="rest" aria-pressed="false">☁️ Rest</button>
+        <button class="mood-choice" type="button" data-mood="fresh" aria-pressed="false">🌱 Fresh start</button>
+        <button class="mood-choice" type="button" data-mood="all" aria-pressed="true">🎲 Surprise me</button>
+      </div>
+    </fieldset>
+    <form id="login-form">
+      <label class="label" for="name">What should we call you? <span class="optional">(optional)</span></label>
+      <div class="input-wrap"><input id="name" name="name" type="text" placeholder="Your first name" maxlength="40" autocomplete="given-name"><button class="submit" type="submit">Find my words <span aria-hidden="true">→</span></button></div>
+      <div class="privacy"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.7 13 3.6v3.9c0 3-2 5.5-5 6.8-3-1.3-5-3.8-5-6.8V3.6L8 1.7Z" stroke="currentColor" stroke-width="1.2"/><path d="m5.7 7.8 1.5 1.5 3.1-3.2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Your name isn’t saved or shared.</div>
+    </form>
+  </section>
+  <section id="result" aria-live="polite"><div class="eyebrow">A note for you</div><div class="result-name" id="greeting"></div><p class="result-sub">A small reminder for wherever you are today.</p><div class="result-quote" id="quote"></div><p class="panda-cheer" id="panda-cheer" role="status">🐼 I’m cheering you on.</p><div class="tiny-kindness" id="tiny-kindness" aria-labelledby="tiny-title"><p class="tiny-label" id="tiny-title">One small kindness for right now</p><p class="tiny-text" id="tiny-text"></p><p class="tiny-note">Optional, gentle, and entirely at your pace.</p><div class="tiny-actions"><button class="tiny-done" id="tiny-done" type="button">I tried this 🌷</button><button class="tiny-another" id="tiny-another" type="button">Another idea</button></div><p class="tiny-status" id="tiny-status" role="status"></p></div><div class="actions"><button class="again" id="another" type="button">🌼 Another little reminder</button><button class="edit" id="edit" type="button">Change name</button></div><div class="result-tools"><button class="tool-button" id="save-quote" type="button" aria-pressed="false">♡ Save this</button><button class="tool-button" id="copy-quote" type="button">⧉ Copy quote</button><button class="tool-button" id="share-card-open" type="button">🌷 Make a share card</button><button class="tool-button" id="show-favorites" type="button" aria-expanded="false" aria-controls="favorites">♡ Saved (0)</button></div><p class="copy-status" id="copy-status" aria-live="polite"></p><div class="favorites" id="favorites" hidden><h3>Your saved reminders</h3><ul class="favorite-list" id="favorite-list"></ul></div><div class="feedback"><p class="feedback-question">Did this reminder help?</p><div class="feedback-actions" role="group" aria-label="Rate this reminder"><button class="feedback-button" type="button" data-feedback="yes">🥰 Yes, thank you</button><button class="feedback-button" type="button" data-feedback="not-yet">💛 Not yet</button></div><p class="feedback-status" id="feedback-status" role="status"></p><p class="feedback-question">Your answer isn’t sent anywhere.</p></div><div class="counter" id="counter"></div></section>
+  <dialog class="share-dialog" id="share-dialog" aria-labelledby="share-title">
+    <div class="share-head"><div><h2 id="share-title">A little kindness to share</h2><p>Your card is made here on your device.</p></div><button class="dialog-close" id="share-close" type="button" aria-label="Close share card">×</button></div>
+    <canvas id="share-canvas" width="1080" height="1350" role="img" aria-label="Preview of your Kindly quote card">Your shareable quote card preview.</canvas>
+    <div class="share-actions"><button class="again" id="download-card" type="button">Download PNG</button><button class="tool-button" id="share-card" type="button">Share card</button></div>
+  </dialog>
+  <aside class="art" aria-label="Illustration of a warm sun setting behind gentle green hills">
+    <span class="note">a gentle reminder</span><span class="star s1">✳</span><span class="star s2">✳</span><span class="star s3">✦</span><div class="sun"></div><div class="hill"></div><div class="hill two"></div>
+    <div class="quote-card"><div class="qmark">“</div><div class="quote-text">You don't have to have it all figured out to take the next small step.</div><div class="quote-by">One thing at a time</div></div>
+  </aside>
+</main>
+<footer><span>A little kindness, whenever you need it.</span><span class="foot-right"><span>Made for the in-between moments</span><span class="foot-dot"></span><span>Take a breath</span></span></footer>
+<script>
+const quotes=[
+  'You have carried yourself through so much. I hope you see how quietly brave that is. 🤍',
+  'You do not have to earn rest, kindness, or love. You already deserve them. 🌷',
+  'Even if today feels messy, you are still becoming someone wonderful. 🌱',
+  'The way forward can be one tiny, trembling step. It still counts. ✨',
+  'You are more than the things you wish you had done differently. 🫶',
+  'Please give yourself credit for showing up, especially when it was hard. ☀️',
+  'You can miss who you were and still be proud of who you are becoming. 🦋',
+  'Somewhere, someone feels safer because you are in their life. 💛',
+  'You are allowed to pause. The world can wait while you catch your breath. ☁️',
+  'A slow season is still a season of growth. Keep tending to yourself. 🌼',
+  'You do not need to feel fearless. Bring your soft heart along anyway. 💗',
+  'What is meant for you will not require you to abandon yourself. 🪷',
+  'Look at you, still hoping. That is a beautiful kind of courage. 🌙',
+  'You are allowed to begin again without punishing yourself for yesterday. 🌅',
+  'There is no deadline for healing, and no wrong way to take it gently. 🕊️',
+  'Your presence matters more than your productivity ever could. 💐',
+  'One day, this hard chapter will be part of the story of how you kept going. 📖',
+  'You are worthy of good things on the days you feel bright and the days you do not. 💖',
+  'You can take the next step before you feel completely ready. 🌤️',
+  'You have permission to be proud of progress no one else can see. 🌱',
+  'A kind choice for yourself is still a brave choice. 💗',
+  'You can be uncertain and still move toward a life that feels like yours. 🦋',
+  'The fact that you care so much says something lovely about your heart. 🤍',
+  'You are not behind; you are living a life that is yours alone. 🌷',
+  'When all you can do is begin again, beginning again is enough. 🌅',
+  'You can put one thing down for today and pick it up when you have more room. ☁️',
+  'Your needs are not an inconvenience. They are part of being human. 🫶',
+  'You do not need to solve everything tonight. Let tomorrow hold some of it. 🌙',
+  'The small promise you keep to yourself can become a place to stand. 🌿',
+  'You can honor how far you have come without knowing exactly where you are going. ✨',
+  'It is okay if your best looks different from one day to the next. 💛',
+  'You are allowed to make a plan that leaves room for rest. 🪷',
+  'Every time you choose patience with yourself, you are practicing a new way forward. 🌼',
+  'You do not have to shrink your joy to make other people comfortable. ☀️',
+  'A setback can change your route without taking away your destination. 🧭',
+  'You can ask for help and still be strong. Let someone meet you halfway. 🤝',
+  'The right pace is the one that lets you keep caring for yourself. 🐢',
+  'There is courage in telling the truth about what you need. 💬',
+  'You are allowed to outgrow the version of you that was only trying to get by. 🌸',
+  'A little hope is still hope. Protect the small spark. 🕯️',
+  'You do not need a perfect morning to make one kind choice today. ☕',
+  'Let this be a reminder: you have made room for good things before. 🌈',
+  'You can feel tender and still be resilient. Both can be true. 💞',
+  'You deserve relationships where you can exhale and be yourself. 🏡',
+  'Some progress is simply noticing what you need sooner than before. 🌻',
+  'You may take the scenic route. Your life is not a race to finish. 🌺',
+  'There is no shame in choosing peace over proving a point. 🕊️',
+  'You have already started, even if all you did was decide to try. 🌱',
+  'You can be proud of who you are while you are still figuring things out. 🌟',
+  'A quiet win is still a win. Let yourself notice the effort it took. 🎉'
+];
+const form=document.querySelector('#login-form'),input=document.querySelector('#name'),welcome=document.querySelector('#welcome'),result=document.querySelector('#result');
+let name='',selectedMood='all',currentQuote='';
+const themeToggle=document.querySelector('#theme-toggle');
+function storageGet(key){try{return localStorage.getItem(key)}catch{return null}}
+function storageSet(key,value){try{localStorage.setItem(key,value)}catch{}}
+function setTheme(theme){document.documentElement.dataset.theme=theme;const dark=theme==='dark';themeToggle.setAttribute('aria-label',`Switch to ${dark?'light':'dark'} mode`);themeToggle.querySelector('.theme-icon').textContent=dark?'☀':'☾';themeToggle.querySelector('span:last-child').textContent=dark?'Light':'Dark';document.querySelector('meta[name="theme-color"]').content=dark?'#201720':'#fff5fa';}
+setTheme(storageGet('kindly-theme')||'light');
+themeToggle.addEventListener('click',()=>{const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';storageSet('kindly-theme',theme);setTheme(theme);});
+const moodQuotes={hope:[2,5,7,12,15,16,17,18,22,24,33,39,41,49],courage:[0,3,5,6,10,12,13,16,19,20,21,23,28,29,32,34,35,39,45,47,48,49],rest:[1,8,9,14,25,26,27,30,31,36,37,42,44,46],fresh:[2,3,6,9,13,14,16,18,19,20,21,24,28,29,32,34,38,40,43,47,48,49]};
+const tinyIdeas={hope:['Step to a window and notice one thing you find beautiful.','Send a kind message to someone who crossed your mind.','Write down one thing you want to make room for this week.','Take a photo of one small thing that feels lovely.'],courage:['Choose the first two-minute step toward something you have been putting off.','Ask one question you have been holding back.','Tell someone what you need in one honest sentence.','Let one imperfect attempt count as a beginning.'],rest:['Take three slow breaths and let your shoulders soften.','Get a glass of water and drink it slowly.','Set a five-minute timer and give yourself permission to pause.','Put your phone down and notice one sound around you.'],fresh:['Clear one small corner of your space.','Write the first tiny step on a note; let the rest wait.','Open a window, stretch, and begin again softly.','Choose one thing you can set down until tomorrow.']};
+const allTinyIdeas=Object.values(tinyIdeas).flat();let lastTinyIdea='',currentTinyIdea='';
+function showTinyIdea(){const pool=selectedMood==='all'?allTinyIdeas:(tinyIdeas[selectedMood]||allTinyIdeas);const options=pool.filter(idea=>idea!==lastTinyIdea);currentTinyIdea=(options.length?options:pool)[Math.floor(Math.random()*(options.length||pool.length))];lastTinyIdea=currentTinyIdea;document.querySelector('#tiny-text').textContent=currentTinyIdea;document.querySelector('#tiny-status').textContent='';document.querySelector('#tiny-kindness').classList.remove('done');const doneButton=document.querySelector('#tiny-done');doneButton.disabled=false;doneButton.textContent='I tried this 🌷';}
+document.querySelectorAll('.mood-choice').forEach(button=>button.addEventListener('click',()=>{selectedMood=button.dataset.mood;document.querySelectorAll('.mood-choice').forEach(choice=>choice.setAttribute('aria-pressed',String(choice===button)));document.querySelector('#panda-message').textContent=selectedMood==='all'?'Surprise it is! 🐼':`A little ${button.textContent.trim().replace(/^\S+\s*/, '').toLowerCase()} coming right up 🌷`;}));
+const checkinLabels={hopeful:'🌤️ Hopeful',low:'💛 Need comfort',overwhelmed:'🌪 Overwhelmed',starting:'🌱 Ready to begin'};
+function localDateKey(date=new Date()){return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`}
+function readCheckins(){try{const value=JSON.parse(storageGet('kindly-checkins')||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{}}catch{return {}}}
+function writeCheckin(mood){const entries=readCheckins();entries[localDateKey()]=mood;const recent=Object.fromEntries(Object.entries(entries).sort(([a],[b])=>a.localeCompare(b)).slice(-30));storageSet('kindly-checkins',JSON.stringify(recent));}
+function selectNeed(mood){selectedMood=mood;document.querySelectorAll('.mood-choice').forEach(choice=>choice.setAttribute('aria-pressed',String(choice.dataset.mood===mood)));}
+function renderCheckinHistory(){const list=document.querySelector('#checkin-history-list');list.replaceChildren();const entries=Object.entries(readCheckins()).sort(([a],[b])=>b.localeCompare(a)).slice(0,7);if(!entries.length){const empty=document.createElement('li');empty.textContent='Your check-ins will appear here when you choose one.';list.append(empty);return;}entries.forEach(([date,mood])=>{const item=document.createElement('li');const day=new Date(`${date}T12:00:00`).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});item.textContent=`${day} · ${checkinLabels[mood]||'Checked in'}`;list.append(item);});}
+document.querySelectorAll('.checkin-choice').forEach(button=>button.addEventListener('click',()=>{const mood=button.dataset.checkin;writeCheckin(mood);document.querySelectorAll('.checkin-choice').forEach(choice=>choice.setAttribute('aria-pressed',String(choice===button)));selectNeed(button.dataset.need);document.querySelector('#panda-message').textContent='Thank you for checking in with yourself 💗';}));
+const todaysCheckin=readCheckins()[localDateKey()];if(todaysCheckin){const todayButton=document.querySelector(`[data-checkin="${todaysCheckin}"]`);if(todayButton){todayButton.setAttribute('aria-pressed','true');selectNeed(todayButton.dataset.need);}}
+document.querySelector('#checkin-history-toggle').addEventListener('click',event=>{const panel=document.querySelector('#checkin-history');panel.hidden=!panel.hidden;event.currentTarget.setAttribute('aria-expanded',String(!panel.hidden));renderCheckinHistory();});
+function chooseQuote(){let last=Number(storageGet('kindly-last-quote'));const pool=selectedMood==='all'?quotes.map((_,i)=>i):moodQuotes[selectedMood];const fresh=pool.filter(i=>i!==last);const options=fresh.length?fresh:pool;const index=options[Math.floor(Math.random()*options.length)];storageSet('kindly-last-quote',String(index));return {text:quotes[index],index};}
+function readFavorites(){try{return JSON.parse(storageGet('kindly-favorites')||'[]').filter(item=>typeof item==='string')}catch{return []}}
+function writeFavorites(items){storageSet('kindly-favorites',JSON.stringify(items))}
+function updateSavedControls(){const saved=readFavorites();const save=document.querySelector('#save-quote');const isSaved=saved.includes(currentQuote);save.textContent=isSaved?'♥ Saved':'♡ Save this';save.setAttribute('aria-pressed',String(isSaved));document.querySelector('#show-favorites').textContent=`♡ Saved (${saved.length})`;renderFavorites(saved);}
+function renderFavorites(items=readFavorites()){const list=document.querySelector('#favorite-list');list.replaceChildren();if(!items.length){const empty=document.createElement('li');empty.className='favorite-item';empty.textContent='Your saved reminders will be here.';list.append(empty);return;}items.forEach((item,index)=>{const li=document.createElement('li');li.className='favorite-item';const text=document.createElement('span');text.textContent=item;const remove=document.createElement('button');remove.className='remove-favorite';remove.type='button';remove.textContent='Remove';remove.setAttribute('aria-label',`Remove saved reminder ${index+1}`);remove.addEventListener('click',()=>{const saved=readFavorites();saved.splice(index,1);writeFavorites(saved);updateSavedControls();});li.append(text,remove);list.append(li);});}
+function showQuote(){const picked=chooseQuote();currentQuote=picked.text;showTinyIdea();const quote=document.querySelector('#quote');document.querySelector('#greeting').textContent=name?`Hey, ${name} 🌻`:'Hey, friend 🌻';quote.textContent=`“${currentQuote}”`;quote.classList.remove('quote-refresh');void quote.offsetWidth;quote.classList.add('quote-refresh');document.querySelector('#counter').textContent=`A fresh thought · ${picked.index+1} of ${quotes.length}`;document.querySelector('#panda-cheer').textContent='🐼 A tiny reminder, just for you.';document.querySelector('#feedback-status').textContent='';document.querySelector('#copy-status').textContent='';document.querySelector('#favorites').hidden=true;document.querySelector('#show-favorites').setAttribute('aria-expanded','false');welcome.style.display='none';result.style.display='block';result.classList.remove('revealing');void result.offsetWidth;result.classList.add('revealing');input.value=name;updateSavedControls();}
+form.addEventListener('submit',e=>{e.preventDefault();name=input.value.trim();showQuote();});
+input.addEventListener('focus',()=>{document.querySelector('#panda-message').textContent='Take your time, friend 🌷';});
+input.addEventListener('blur',()=>{if(!name)document.querySelector('#panda-message').textContent='I’ll be right here 🐼';});
+document.querySelector('#another').addEventListener('click',showQuote);
+document.querySelector('#tiny-another').addEventListener('click',showTinyIdea);
+document.querySelector('#tiny-done').addEventListener('click',event=>{event.currentTarget.disabled=true;event.currentTarget.textContent='You did it 🌷';document.querySelector('#tiny-kindness').classList.add('done');document.querySelector('#tiny-status').textContent='You made a little space for yourself. That matters.';document.querySelector('#panda-cheer').textContent='🐼 I’m proud of you for showing yourself care!';});
+document.querySelector('#edit').addEventListener('click',()=>{result.style.display='none';welcome.style.display='block';input.focus();});
+document.querySelector('#save-quote').addEventListener('click',()=>{const saved=readFavorites();const index=saved.indexOf(currentQuote);if(index>=0)saved.splice(index,1);else saved.unshift(currentQuote);writeFavorites(saved);updateSavedControls();});
+document.querySelector('#show-favorites').addEventListener('click',event=>{const panel=document.querySelector('#favorites');panel.hidden=!panel.hidden;event.currentTarget.setAttribute('aria-expanded',String(!panel.hidden));renderFavorites();});
+document.querySelector('#copy-quote').addEventListener('click',async()=>{const status=document.querySelector('#copy-status');try{await navigator.clipboard.writeText(`“${currentQuote}”`);status.textContent='Copied—send a little kindness along 💌';}catch{const helper=document.createElement('textarea');helper.value=`“${currentQuote}”`;helper.style.position='fixed';helper.style.opacity='0';document.body.append(helper);helper.select();const copied=document.execCommand('copy');helper.remove();status.textContent=copied?'Copied—send a little kindness along 💌':'Copy isn’t available here. You can select the quote to copy it.';}});
+const shareDialog=document.querySelector('#share-dialog'),shareCanvas=document.querySelector('#share-canvas');
+let shareBlob=null;
+function roundedBox(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function wrapCanvasText(ctx,text,maxWidth){const words=text.split(/\s+/),lines=[];let line='';for(const word of words){const next=line?`${line} ${word}`:word;if(line&&ctx.measureText(next).width>maxWidth){lines.push(line);line=word}else line=next;}if(line)lines.push(line);return lines;}
+async function makeShareCard(){await document.fonts.ready;const ctx=shareCanvas.getContext('2d');const w=shareCanvas.width,h=shareCanvas.height;const bg=ctx.createLinearGradient(0,0,w,h);bg.addColorStop(0,'#fff5fa');bg.addColorStop(.55,'#fbe3ed');bg.addColorStop(1,'#fff0e9');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);const glow=ctx.createRadialGradient(880,160,20,880,160,390);glow.addColorStop(0,'#f5bfd5aa');glow.addColorStop(1,'#f5bfd500');ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);roundedBox(ctx,68,68,944,1214,58);ctx.fillStyle='#fffafd';ctx.fill();ctx.textAlign='left';ctx.fillStyle='#ad4777';ctx.font='700 46px "DM Sans", sans-serif';ctx.fillText('kindly',142,174);ctx.font='30px "DM Sans", sans-serif';ctx.fillText('🌷',300,174);ctx.strokeStyle='#f1d9e5';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(142,220);ctx.lineTo(938,220);ctx.stroke();ctx.textAlign='center';ctx.fillStyle='#927687';ctx.font='600 24px "DM Sans", sans-serif';ctx.fillText('A LITTLE REMINDER FOR YOU',540,315);let fontSize=60;ctx.font=`italic ${fontSize}px "Playfair Display", Georgia, serif`;let lines=wrapCanvasText(ctx,currentQuote,780);while(lines.length>8&&fontSize>44){fontSize-=4;ctx.font=`italic ${fontSize}px "Playfair Display", Georgia, serif`;lines=wrapCanvasText(ctx,currentQuote,780);}const lineHeight=fontSize*1.38;const startY=465;ctx.fillStyle='#442b39';lines.forEach((line,i)=>ctx.fillText(line,540,startY+i*lineHeight));const endY=startY+lines.length*lineHeight+48;ctx.strokeStyle='#d985ad';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(390,endY);ctx.lineTo(690,endY);ctx.stroke();ctx.font='64px sans-serif';ctx.fillText('🐼  💗  🌷',540,Math.min(endY+105,1015));ctx.fillStyle='#927687';ctx.font='30px "DM Sans", sans-serif';ctx.fillText('You deserve a little kindness today.',540,1115);ctx.font='22px "DM Sans", sans-serif';ctx.fillText('kindly · take what you need',540,1200);shareCanvas.setAttribute('aria-label',`Share card preview: ${currentQuote}`);shareBlob=await new Promise(resolve=>shareCanvas.toBlob(resolve,'image/png'));}
+document.querySelector('#share-card-open').addEventListener('click',async()=>{await makeShareCard();shareDialog.showModal();});
+document.querySelector('#share-close').addEventListener('click',()=>shareDialog.close());
+document.querySelector('#download-card').addEventListener('click',async()=>{if(!shareBlob)await makeShareCard();const url=URL.createObjectURL(shareBlob);const link=document.createElement('a');link.href=url;link.download='kindly-quote.png';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+const nativeShareButton=document.querySelector('#share-card');try{const sampleFile=new File(['Kindly quote card'],'kindly-quote.png',{type:'image/png'});if(!navigator.share||!navigator.canShare||!navigator.canShare({files:[sampleFile]}))nativeShareButton.hidden=true;}catch{nativeShareButton.hidden=true;}
+nativeShareButton.addEventListener('click',async()=>{try{if(!shareBlob)await makeShareCard();const file=new File([shareBlob],'kindly-quote.png',{type:'image/png'});await navigator.share({files:[file],title:'A little reminder from Kindly',text:currentQuote});}catch(error){if(error.name!=='AbortError')document.querySelector('#copy-status').textContent='Sharing isn’t available here—download your card instead.';}});
+document.querySelectorAll('[data-feedback]').forEach(button=>button.addEventListener('click',()=>{const helped=button.dataset.feedback==='yes';document.querySelector('#feedback-status').textContent=helped?'Thank you for sharing. Keep that little warmth with you 💗':'That’s okay. We can keep looking together 🌷';document.querySelector('#panda-cheer').textContent=helped?'🐼 That makes my little panda heart happy!':'🐼 I’m still cheering for you.';}));
+</script>
+</body>
+</html>
